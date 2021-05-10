@@ -2,10 +2,10 @@ package com.company;
 
 public class Contact {
 
-    String firstName,lastName,address,city,zip,phoneNumber,email;
-    //constructor
-    //public Contact() {}
-    public Contact(String firstName, String lastName, String address, String city, String zip, String phoneNumber, String email) {
+    String firstName,lastName,address,city,email,phoneNumber;
+    int zip;
+    public Contact(String firstName, String lastName, String address, String city, int zip, String phoneNumber, String email)
+    {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -13,9 +13,5 @@ public class Contact {
         this.zip = zip;
         this.phoneNumber = phoneNumber;
         this.email = email;
-    }
-    public String toString()
-    {
-        return firstName+"\t"+lastName+"\t"+address+"\t"+city+"\t"+zip+"\t"+phoneNumber+"\t"+email;
     }
 }

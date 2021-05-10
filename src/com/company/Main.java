@@ -6,7 +6,8 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
 
     public void addContacts() {
-        String firstName, lastName, address, city, zip, phoneNumber, email;
+        String firstName, lastName, address, city, email,phoneNumber;
+        int zip;
         System.out.println("Enter First Name: ");
         firstName = sc.next();
         System.out.println("Enter LastName: ");
@@ -16,7 +17,7 @@ public class Main {
         System.out.println("Enter city: ");
         city = sc.next();
         System.out.println("Enter zip: ");
-        zip = sc.next();
+        zip = sc.nextInt();
         System.out.println("Enter Phone Number: ");
         phoneNumber = sc.next();
         System.out.println("Enter Email Id: ");
@@ -24,21 +25,18 @@ public class Main {
         //contact class object
         Contact contact = new Contact(firstName, lastName, address, city, zip, phoneNumber, email);
         persons.add(contact);
-        for (int i = 0; i < persons.size(); i++) {
-            System.out.println(persons.get(i));
-        }
     }
 
-    public void editContact(){
+    public void editContact() {
         System.out.println("Enter First Name: ");
         String checkFirstName = sc.next();      // Take Name From User To Check
         boolean flag = false;
-        for(Contact contact : persons) {
+        for (Contact contact : persons) {
 
             if (contact.firstName.equals(checkFirstName)) //check Name Equals
             {
                 flag = true;
-                System.out.println("1. First Name\n"+"2.Last Name\n"+"3.Address\n"+"4.city\n"+"5.zip\n"+"6.phoneNumber\n"+"7.email");
+                System.out.println("1. First Name\n" + "2.Last Name\n" + "3.Address\n" + "4.city\n" + "5.zip\n" + "6.phoneNumber\n" + "7.email");
                 int choice = sc.nextInt(); //take choice for edit
 
                 switch (choice) {
@@ -65,7 +63,7 @@ public class Main {
                         break;
                     case 5:
                         System.out.println("Enter zip : ");
-                        String zip = sc.next();
+                        int zip = sc.nextInt();
                         contact.zip = zip;
                         break;
                     case 6:
@@ -84,48 +82,73 @@ public class Main {
                 break;
             }
         }
-        if(flag == false){
-                System.out.println(checkFirstName + " Not Found!");
+        if (flag == false){
+            System.out.println(checkFirstName + " Not Found!");
         }
 
     }
-    public void deleteContact()
-    {
+
+    public void deleteContact() {
         System.out.println("Enter First Name: ");
         String checkFirstName = sc.next();      // Take Name From User To Check
         boolean flag = false;
-        for(Contact contact : persons) {
+        for (Contact contact : persons) {
 
             if (contact.firstName.equals(checkFirstName)) //check Name Equals
             {
                 flag = true;
-                persons.remove(contact);    //delete contact
+                persons.remove(contact);   //delete contact
+                break;
             }
         }
-        if(flag==false)
+        if (flag == false) {
+            System.out.println(checkFirstName + " is Not Found");
+        }
+    }
+    public void displayContacts() // display Contacts
+    {
+        int i=1;
+        for(Contact contact : persons)
         {
-            System.out.println(checkFirstName+" is Not Found");
+            System.out.print("Contact: "+i);
+            System.out.print("\tFirst Name : "+contact.firstName);
+            System.out.print("\tLast Name : "+contact.lastName);
+            System.out.print("\tAddress : "+contact.address);
+            System.out.print("\tCity : "+contact.city);
+            System.out.print("\tzip : "+contact.zip);
+            System.out.print("\tPhoane Number : "+contact.phoneNumber);
+            System.out.print("\temail : "+contact.email+"\n");
+            i++;
         }
     }
     public static void main(String[] args) {
         System.out.println("Welcome To Address Book Program");
         Main ad = new Main();
-            System.out.println("1. Add\n2. Edit\n3. delete");
+        while (true) {
+
+            System.out.println("1. Add\n2. Edit\n3. Delete\n4. Exit");
             int check;
             System.out.println("Enter Your Choice");
             check = sc.nextInt();
             switch (check) {
                 case 1:
-                    ad.addContacts();//Add method call
+                    ad.addContacts();
+                    ad.displayContacts();
                     break;
                 case 2:
-                    ad.editContact();//edit Method call
+                    ad.editContact();
+                    ad.displayContacts();
                     break;
                 case 3:
-                    ad.deleteContact();//delete Method call
+                    ad.deleteContact();
+                    ad.displayContacts();
                     break;
+                case 4:
+                    System.out.println(" Terminated...");
+                    return;
                 default:
                     System.exit(0);
             }
+        }
     }
 }
