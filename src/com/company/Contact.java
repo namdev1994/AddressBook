@@ -4,6 +4,7 @@ public class Contact {
 
     String firstName,lastName,address,city,zip,phoneNumber,email;
     //constructor
+    //public Contact() {}
     public Contact(String firstName, String lastName, String address, String city, String zip, String phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
