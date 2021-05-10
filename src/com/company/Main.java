@@ -89,10 +89,28 @@ public class Main {
         }
 
     }
+    public void deleteContact()
+    {
+        System.out.println("Enter First Name: ");
+        String checkFirstName = sc.next();      // Take Name From User To Check
+        boolean flag = false;
+        for(Contact contact : persons) {
+
+            if (contact.firstName.equals(checkFirstName)) //check Name Equals
+            {
+                flag = true;
+                persons.remove(contact);    //delete contact
+            }
+        }
+        if(flag==false)
+        {
+            System.out.println(checkFirstName+" is Not Found");
+        }
+    }
     public static void main(String[] args) {
         System.out.println("Welcome To Address Book Program");
         Main ad = new Main();
-            System.out.println("1. Add\n2. Edit\n");
+            System.out.println("1. Add\n2. Edit\n3. delete");
             int check;
             System.out.println("Enter Your Choice");
             check = sc.nextInt();
@@ -102,6 +120,9 @@ public class Main {
                     break;
                 case 2:
                     ad.editContact();//edit Method call
+                    break;
+                case 3:
+                    ad.deleteContact();//delete Method call
                     break;
                 default:
                     System.exit(0);
