@@ -2,11 +2,13 @@ package com.company;
 import java.util.*;
 public class Main {
 
-    ArrayList<Contact> persons = new ArrayList<Contact>();
+    static ArrayList<Contact> persons = new ArrayList<Contact>();
+    public static Map<String, ArrayList<Contact>> addressBookList = new HashMap<String, ArrayList<Contact>>();
     static Scanner sc = new Scanner(System.in);
 
-    public void addContacts() {
-        String firstName, lastName, address, city, email,phoneNumber;
+
+    public static void addContacts() {
+        String firstName, lastName, address, city, email, phoneNumber;
         int zip;
         System.out.println("Enter First Name: ");
         firstName = sc.next();
@@ -27,7 +29,7 @@ public class Main {
         persons.add(contact);
     }
 
-    public void editContact() {
+    public static void editContact() {
         System.out.println("Enter First Name: ");
         String checkFirstName = sc.next();      // Take Name From User To Check
         boolean flag = false;
@@ -82,13 +84,14 @@ public class Main {
                 break;
             }
         }
-        if (flag == false){
+        if (flag == false) {
             System.out.println(checkFirstName + " Not Found!");
         }
 
     }
 
-    public void deleteContact() {
+    public static void deleteContact() {
+
         System.out.println("Enter First Name: ");
         String checkFirstName = sc.next();      // Take Name From User To Check
         boolean flag = false;
@@ -105,50 +108,80 @@ public class Main {
             System.out.println(checkFirstName + " is Not Found");
         }
     }
-    public void displayContacts() // display Contacts
+
+    public static void displayContacts() // display Contacts
     {
-        int i=1;
-        for(Contact contact : persons)
-        {
-            System.out.print("Contact: "+i);
-            System.out.print("\tFirst Name : "+contact.firstName);
-            System.out.print("\tLast Name : "+contact.lastName);
-            System.out.print("\tAddress : "+contact.address);
-            System.out.print("\tCity : "+contact.city);
-            System.out.print("\tzip : "+contact.zip);
-            System.out.print("\tPhoane Number : "+contact.phoneNumber);
-            System.out.print("\temail : "+contact.email+"\n");
+        int i = 1;
+        for (Contact contact : persons) {
+            System.out.print("Contact: " + i);
+            System.out.print("\tFirst Name : " + contact.firstName);
+            System.out.print("\tLast Name : " + contact.lastName);
+            System.out.print("\tAddress : " + contact.address);
+            System.out.print("\tCity : " + contact.city);
+            System.out.print("\tzip : " + contact.zip);
+            System.out.print("\tPhoane Number : " + contact.phoneNumber);
+            System.out.print("\temail : " + contact.email + "\n");
             i++;
         }
     }
-    public static void main(String[] args) {
-        System.out.println("Welcome To Address Book Program");
-        Main ad = new Main();
-        while (true) {
 
+    public static void main(String[] args) {
+        System.out.println("Welcome to Address Book System");
+        boolean flag = true;
+        while (flag) {
+            System.out.println("1: Add new address book");
+            System.out.println("2: exit");
+            int option = sc.nextInt();
+            switch (option) {
+                case 1:
+                    System.out.println("Enter the name of the address book");
+                    String addressBookName = sc.next();
+                    if (addressBookList.containsKey(addressBookName)) {
+                        System.out.println("this address book already exists ");
+                    } else {
+                        addressBookList.put(addressBookName, persons);
+                        addAddressBook();
+                        for (Map.Entry<String, ArrayList<Contact>> entry : addressBookList.entrySet())
+
+                            System.out.println("AddressBookName = " + entry.getKey() +
+
+                                    ", Contact Value = " + entry.getValue());
+                    }
+                    break;
+                case 2:
+                    flag= false;
+                    break;
+                    }
+            }
+        }
+    public static void addAddressBook(){
+        boolean flag = true;
+        while (flag) {
             System.out.println("1. Add\n2. Edit\n3. Delete\n4. Exit");
             int check;
             System.out.println("Enter Your Choice");
             check = sc.nextInt();
             switch (check) {
                 case 1:
-                    ad.addContacts();
-                    ad.displayContacts();
+                    addContacts();
+                    displayContacts();
                     break;
                 case 2:
-                    ad.editContact();
-                    ad.displayContacts();
+                    editContact();
+                    displayContacts();
                     break;
                 case 3:
-                    ad.deleteContact();
-                    ad.displayContacts();
+                    deleteContact();
+                    displayContacts();
                     break;
                 case 4:
-                    System.out.println(" Terminated...");
-                    return;
+                    flag = false;
+                    break;
                 default:
-                    System.exit(0);
+                    System.out.println("Enter valid number");
+                    break;
             }
         }
     }
 }
+

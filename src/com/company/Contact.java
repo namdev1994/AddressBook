@@ -14,4 +14,8 @@ public class Contact {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
+    public String toString()
+    {
+        return firstName+"\t"+lastName+"\t"+address+"\t"+city+"\t"+zip+"\t"+phoneNumber+"\t"+email;
+    }
 }
