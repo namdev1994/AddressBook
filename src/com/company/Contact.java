@@ -2,9 +2,9 @@ package com.company;
 
 public class Contact {
 
-    String firstName,lastName,address,city,email,phoneNumber;
+    String firstName,lastName,address,city,email,phoneNumber,state;
     int zip;
-    public Contact(String firstName, String lastName, String address, String city, int zip, String phoneNumber, String email)
+    public Contact(String firstName, String lastName, String address, String city, int zip, String number, String phoneNumber, String email)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -13,6 +13,7 @@ public class Contact {
         this.zip = zip;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.state=state;
     }
     public String toString()
     {
