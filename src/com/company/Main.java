@@ -1,7 +1,10 @@
 package com.company;
 import java.util.*;
+import java.util.stream.Collectors;
+
 public class Main {
 
+    static ArrayList<Contact> temppersons = new ArrayList<Contact>();
     static ArrayList<Contact> persons = new ArrayList<Contact>();
     public static Map<String, ArrayList<Contact>> addressBookList = new HashMap<String, ArrayList<Contact>>();
     static Scanner sc = new Scanner(System.in);
@@ -26,8 +29,13 @@ public class Main {
         email = sc.next();
         //contact class object
         Contact contact = new Contact(firstName, lastName, address, city, zip, phoneNumber, email);
-        persons.add(contact);
+        temppersons.add(contact);
+        List distelemenet= temppersons.stream().distinct().collect(Collectors.toList());
+         persons = new ArrayList<Contact>(distelemenet);
+        //System.out.println(persons);
+
     }
+
 
     public static void editContact() {
         System.out.println("Enter First Name: ");
@@ -37,6 +45,7 @@ public class Main {
 
             if (contact.firstName.equals(checkFirstName)) //check Name Equals
             {
+
                 flag = true;
                 System.out.println("1. First Name\n" + "2.Last Name\n" + "3.Address\n" + "4.city\n" + "5.zip\n" + "6.phoneNumber\n" + "7.email");
                 int choice = sc.nextInt(); //take choice for edit
@@ -125,36 +134,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Address Book System");
-        boolean flag = true;
-        while (flag) {
-            System.out.println("1: Add new address book");
-            System.out.println("2: exit");
-            int option = sc.nextInt();
-            switch (option) {
-                case 1:
-                    System.out.println("Enter the name of the address book");
-                    String addressBookName = sc.next();
-                    if (addressBookList.containsKey(addressBookName)) {
-                        System.out.println("this address book already exists ");
-                    } else {
-                        addressBookList.put(addressBookName, persons);
-                        addAddressBook();
-                        for (Map.Entry<String, ArrayList<Contact>> entry : addressBookList.entrySet())
-
-                            System.out.println("AddressBookName = " + entry.getKey() +
-
-                                    ", Contact Value = " + entry.getValue());
-                    }
-                    break;
-                case 2:
-                    flag= false;
-                    break;
-                    }
-            }
-        }
-    public static void addAddressBook(){
+    public static void addAddressBook() {
         boolean flag = true;
         while (flag) {
             System.out.println("1. Add\n2. Edit\n3. Delete\n4. Exit");
@@ -175,10 +155,41 @@ public class Main {
                     displayContacts();
                     break;
                 case 4:
+                    displayContacts();
                     flag = false;
                     break;
                 default:
                     System.out.println("Enter valid number");
+                    break;
+            }
+        }
+    }
+
+
+
+    public static void main(String[] args) {
+        System.out.println("Welcome to Address Book System");
+        boolean flag = true;
+        while (flag) {
+            System.out.println("1: Add new address book\n2: Exit");
+            int option = sc.nextInt();
+            switch (option) {
+                case 1:
+                    System.out.println("Enter the Name of the address book");
+                    String addressBookName = sc.next();
+                    if (addressBookList.containsKey(addressBookName)) {
+                        System.out.println("This address book is already Present ");
+                    } else {
+                        addAddressBook();
+                        addressBookList.put(addressBookName, persons);
+
+                       for (Map.Entry<String, ArrayList<Contact>> entry : addressBookList.entrySet())
+                           System.out.println("AddressBookName = " + entry.getKey() + ", Contact Details = " + entry.getValue());
+                    }
+
+                    break;
+                case 2:
+                    flag = false;
                     break;
             }
         }
