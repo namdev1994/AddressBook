@@ -8,6 +8,8 @@ public class AddressBook {
     static ArrayList<Contact> persons = new ArrayList<Contact>();
     public static Map<String, ArrayList<Contact>> addressBookList = new HashMap<String, ArrayList<Contact>>();
     static Scanner sc = new Scanner(System.in);
+    public HashMap<String, ArrayList<Contact>> personByState;
+    public HashMap<String, ArrayList<Contact>> personByCity;
 
 
     public static void addContacts() {
@@ -30,7 +32,7 @@ public class AddressBook {
         System.out.println("Enter Email Id: ");
         email = sc.next();
         //contact class object
-        Contact contact = new Contact(firstName, lastName, address, city, zip, phoneNumber, email,state);
+        Contact contact = new Contact(firstName, lastName, address, city, phoneNumber, email,state,zip);
         temppersons.add(contact);
         List distelemenet= temppersons.stream().distinct().collect(Collectors.toList());
         persons = new ArrayList<Contact>(distelemenet);
@@ -143,4 +145,13 @@ public class AddressBook {
             System.out.println("Last Name: "+contact.lastName);
         }
     }
-}
+
+    public void getPersonNameByState(String state) {
+        List<Contact> list  = persons.stream().filter(p ->p.city.equals(state)).collect(Collectors.toList());
+        for(Contact contact: list){
+            System.out.println("First Name: "+contact.firstName);
+            System.out.println("Last Name: "+contact.lastName);
+        }
+    }
+    }
+

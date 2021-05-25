@@ -4,17 +4,18 @@ public class Contact {
 
     String firstName,lastName,address,city,email,phoneNumber,state;
     int zip;
-    public Contact(String firstName, String lastName, String address, String city, int zip, String number, String phoneNumber, String email)
-    {
+
+    public Contact(String firstName, String lastName, String address, String city, String email, String phoneNumber, String state, int zip) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.city = city;
-        this.zip = zip;
-        this.phoneNumber = phoneNumber;
         this.email = email;
-        this.state=state;
+        this.phoneNumber = phoneNumber;
+        this.state = state;
+        this.zip = zip;
     }
+
     public String toString()
     {
         return firstName+"\t"+lastName+"\t"+address+"\t"+city+"\t"+zip+"\t"+phoneNumber+"\t"+email;
