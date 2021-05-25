@@ -11,7 +11,8 @@ public class Main {
         boolean flag = true;
         while (flag) {
             System.out.println("1: Add new address book\n2: search persons by city name\n3: searchPersonsByState" +
-                    "\n4: exit");
+                    "\n4: search persons as per state using  java stream \n5: search persons as per city by using java stream\n6: no of persons count by state" +
+                    "\n7: no of persons count by city\n8: Exit");
             int option = sc.nextInt();
             switch (option) {
                 case 1:
@@ -29,29 +30,56 @@ public class Main {
                     String cityName = sc.next();
                     Main.searchPersonByCity(cityName);
                     break;
-                case 4:
+                case 3:
                     System.out.println("Enter Name of State: ");
                     String stateName = sc.next();
                     Main.searchPersonByState(stateName);
                     break;
-                case 5:
+                case 4:
                     System.out.println("Enter Name of State: ");
                     String stateName1 = sc.next();
                     Main.viewPersonByStateUsingHashmap(stateName1);
                     break;
-                case 6:
+                case 5:
                     System.out.println("Enter Name of City: ");
                     String cityName1 = sc.next();
                     Main.viewPersonByCityUsingHashMap(cityName1);
                     break;
+                case 6:
+                    System.out.println("Enter Name of State: ");
+                    String stateName2 = sc.next();
+                    Main.CountByState(stateName2);
+                    break;
                 case 7:
+                    System.out.println("Enter Name of City: ");
+                    String cityName2 = sc.next();
+                    Main.CountByCity(cityName2);
+                    break;
+                case 8:
                     flag = false;
                     break;
             }
         }
     }
+    private static void CountByCity(String cityName2) {
+        int countPersonInCity=0;
+        for(Map.Entry<String, AddressBook> entry: addressBookList.entrySet())
+        {
+            for(int i=0;i<(entry.getValue()).persons.size();i++)
+            {
+                Contact contact= (Contact) entry.getValue().persons.get(i);
 
-    private static void viewPersonByCityUsingHashMap(String cityName1) {
+                if(cityName2.equals(contact.city))
+                {
+                    countPersonInCity++;
+                }
+
+            }
+        }
+        System.out.println("Total number of people in this city "+cityName2+": "+countPersonInCity);
+    }
+    private static void viewPersonByCityUsingHashMap(String cityName1) // search person by city using java stream
+    {
         for (Map.Entry<String, AddressBook> entry : addressBookList.entrySet()) {
             AddressBook value = entry.getValue();
             ArrayList<Contact> contacts = value.personByCity.entrySet().stream().filter(findCity -> findCity.getKey().equals(cityName1)).map(Map.Entry::getValue).findFirst().orElse(null);
@@ -60,9 +88,8 @@ public class Main {
             }
         }
     }
-
-
-    private static void viewPersonByStateUsingHashmap(String stateName1) {
+    private static void viewPersonByStateUsingHashmap(String stateName1) //search persons by using java steram functions
+    {
         for (Map.Entry<String, AddressBook> entry : addressBookList.entrySet()) {
             AddressBook value = entry.getValue();
             ArrayList<Contact> contacts = value.personByState.entrySet().stream().filter(findState -> findState.getKey().equals(stateName1)).map(Map.Entry::getValue).findFirst().orElse(null);
@@ -71,23 +98,37 @@ public class Main {
             }
         }
     }
-
-    private static void searchPersonByState(String state) {
+    private static void searchPersonByState(String stateName) //search persons by state
+    {
         for(Map.Entry<String,AddressBook> entry: addressBookList.entrySet()){
             AddressBook value = entry.getValue();
             System.out.println("The Address Book: "+entry.getKey());
-            value.getPersonNameByState(state);
+            value.getPersonNameByState(stateName);
         }
     }
-
-    private static void searchPersonByCity(String city) {
+    private static void searchPersonByCity(String cityName) //search persons by city
+    {
         for(Map.Entry<String,AddressBook> entry: addressBookList.entrySet()){
             AddressBook value = entry.getValue();
             System.out.println("The Address Book: "+entry.getKey());
-            value.getPersonNameByCity(city);
+            value.getPersonNameByCity(cityName);
         }
     }
+    private static void CountByState(String stateName2) // count no of persons in State
+    {
+        int count = 0;
+        for (Map.Entry<String, AddressBook> entry : addressBookList.entrySet()) {
+            for (int i = 0; i < (entry.getValue()).persons.size(); i++) {
+                Contact contact = entry.getValue().persons.get(i);
 
+                if (stateName2.equals(contact.state)) {
+                    count++;
+                }
+
+            }
+        }
+        System.out.println("Total number of people in State "+stateName2+": "+count);
+    }
     private static void addAddressBook(String addressBookName) {
         boolean flag = true;
         while (flag) {
@@ -121,4 +162,3 @@ public class Main {
         System.out.println("Address Book Added Successfully");
     }
 }
-
