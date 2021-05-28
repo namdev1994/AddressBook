@@ -1,5 +1,6 @@
 package com.company;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     private static AddressBook addressBook = new AddressBook();
@@ -12,7 +13,7 @@ public class Main {
         while (flag) {
             System.out.println("1: Add new address book\n2: search persons by city name\n3: searchPersonsByState" +
                     "\n4: search persons as per state using  java stream \n5: search persons as per city by using java stream\n6: no of persons count by state" +
-                    "\n7: no of persons count by city\n8: Exit");
+                    "\n7: no of persons count by city\n8: sortByName as per Alphabetically\n9: Exit");
             int option = sc.nextInt();
             switch (option) {
                 case 1:
@@ -61,6 +62,7 @@ public class Main {
             }
         }
     }
+
     private static void CountByCity(String cityName2) {
         int countPersonInCity=0;
         for(Map.Entry<String, AddressBook> entry: addressBookList.entrySet())
@@ -69,7 +71,7 @@ public class Main {
             {
                 Contact contact= (Contact) entry.getValue().persons.get(i);
 
-                if(cityName2.equals(contact.city))
+                if(cityName2.equals(contact.getCity()))
                 {
                     countPersonInCity++;
                 }
@@ -84,7 +86,7 @@ public class Main {
             AddressBook value = entry.getValue();
             ArrayList<Contact> contacts = value.personByCity.entrySet().stream().filter(findCity -> findCity.getKey().equals(cityName1)).map(Map.Entry::getValue).findFirst().orElse(null);
             for(Contact contact: contacts){
-                System.out.println("First Name: "+contact.firstName+" Last Name: "+ contact.lastName);
+                System.out.println("First Name: "+contact.getFirstName()+" Last Name: "+ contact.getLastName());
             }
         }
     }
@@ -94,7 +96,7 @@ public class Main {
             AddressBook value = entry.getValue();
             ArrayList<Contact> contacts = value.personByState.entrySet().stream().filter(findState -> findState.getKey().equals(stateName1)).map(Map.Entry::getValue).findFirst().orElse(null);
             for(Contact contact: contacts){
-                System.out.println("First Name: "+contact.firstName+" Last Name: "+ contact.lastName);
+                System.out.println("First Name: "+contact.getFirstName()+" Last Name: "+ contact.getLastName());
             }
         }
     }
@@ -121,7 +123,7 @@ public class Main {
             for (int i = 0; i < (entry.getValue()).persons.size(); i++) {
                 Contact contact = entry.getValue().persons.get(i);
 
-                if (stateName2.equals(contact.state)) {
+                if (stateName2.equals(contact.getAddress())) {
                     count++;
                 }
 
