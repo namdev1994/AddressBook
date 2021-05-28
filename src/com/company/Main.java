@@ -57,8 +57,24 @@ public class Main {
                     Main.CountByCity(cityName2);
                     break;
                 case 8:
+                    System.out.println("Sort Contact");
+                    Main.sortContactByName();
+
+                case 9:
                     flag = false;
                     break;
+            }
+        }
+    }
+    // sort contact as per names Alphabetically
+    private static void sortContactByName() {
+        for (Map.Entry<String,AddressBook>entry:addressBookList.entrySet()){
+            AddressBook value = entry.getValue();
+            List<Contact> sortedList = value.persons.stream().sorted(Comparator.comparing(Contact::getFirstName)).collect(Collectors.toList());
+
+            for(Contact contact:sortedList){
+                System.out.println("First Name: "+contact.getFirstName());
+                System.out.println("Last Name: "+contact.getLastName());
             }
         }
     }
