@@ -13,7 +13,7 @@ public class Main {
         while (flag) {
             System.out.println("1: Add new address book\n2: search persons by city name\n3: searchPersonsByState" +
                     "\n4: search persons as per state using  java stream \n5: search persons as per city by using java stream\n6: no of persons count by state" +
-                    "\n7: no of persons count by city\n8: sortByName as per Alphabetically\n9: Exit");
+                    "\n7: no of persons count by city\n8: sortByName as per Alphabetically\n9: sort by city\n10: sort by state\n11: sort by zipcode\n12:Exit");
             int option = sc.nextInt();
             switch (option) {
                 case 1:
@@ -59,13 +59,62 @@ public class Main {
                 case 8:
                     System.out.println("Sort Contact");
                     Main.sortContactByName();
-
+                    break;
                 case 9:
+                    Main.sortContactByCity();
+                    break;
+
+                case 10:
+                    Main.sortContactByState();
+                    break;
+
+                case 11:
+                    Main.sortContactByZip();
+                    break;
+
+                case 12:
                     flag = false;
                     break;
             }
         }
     }
+     //sorted as per zip display contacts
+    private static void sortContactByZip() {
+        for (Map.Entry<String,AddressBook>entry:addressBookList.entrySet()){
+            AddressBook value = entry.getValue();
+            List<Contact> sortedList = value.persons.stream().sorted(Comparator.comparing(Contact::getZip)).collect(Collectors.toList());
+
+            for(Contact contact:sortedList){
+                System.out.println("First Name: "+contact.getFirstName());
+                System.out.println("Last Name: "+contact.getLastName());
+            }
+        }
+    }
+    // //sorted as per state display contacts
+    private static void sortContactByState() {
+        for (Map.Entry<String,AddressBook>entry:addressBookList.entrySet()){
+            AddressBook value = entry.getValue();
+            List<Contact> sortedList = value.persons.stream().sorted(Comparator.comparing(Contact::getState)).collect(Collectors.toList());
+
+            for(Contact contact:sortedList){
+                System.out.println("First Name: "+contact.getFirstName());
+                System.out.println("Last Name: "+contact.getLastName());
+            }
+        }
+    }
+     //sorted as per city display contacts
+    private static void sortContactByCity() {
+        for (Map.Entry<String,AddressBook>entry:addressBookList.entrySet()){
+            AddressBook value = entry.getValue();
+            List<Contact> sortedList = value.persons.stream().sorted(Comparator.comparing(Contact::getCity)).collect(Collectors.toList());
+
+            for(Contact contact:sortedList){
+                System.out.println("First Name: "+contact.getFirstName());
+                System.out.println("Last Name: "+contact.getLastName());
+            }
+        }
+    }
+
     // sort contact as per names Alphabetically
     private static void sortContactByName() {
         for (Map.Entry<String,AddressBook>entry:addressBookList.entrySet()){
@@ -147,6 +196,7 @@ public class Main {
         }
         System.out.println("Total number of people in State "+stateName2+": "+count);
     }
+    // add contacts in addressBook like add edit delete
     private static void addAddressBook(String addressBookName) {
         boolean flag = true;
         while (flag) {
